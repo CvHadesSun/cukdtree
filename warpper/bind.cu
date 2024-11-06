@@ -33,8 +33,20 @@ void bind_box_t(py::module& m) {
 
 PYBIND11_MODULE(cuda_kdtree, m) {
   bind_box_t<float3>(m);
+  py::class_<PointPlusPayload>(m, "PointPlusPayload")
+  .def(py::init<>())
+  .def_readwrite("position", &PointPlusPayload::position)
+  .def_readwrite("payload", &PointPlusPayload::payload);
+     py::class_<float3>(m, "float3")
+     .def(py::init<>())
+     .def_readwrite("x", &float3::x)
+     .def_readwrite("y", &float3::y)
+     .def_readwrite("z", &float3::z);
   m.def("build_kdtree", &build_kdtree, py::return_value_policy::reference);
   m.def("query", &query, py::return_value_policy::reference);
+  m.def("build_kdtree_with_indices", &build_kdtree_with_index, py::return_value_policy::reference);
+  m.def("get_data", &get_data, py::return_value_policy::reference);
+  m.def("query_from_kdtree", &query_from_kdtree, py::return_value_policy::reference);
 }
 
 // PYBIND11_MODULE(cuda_kdtree, m) {
