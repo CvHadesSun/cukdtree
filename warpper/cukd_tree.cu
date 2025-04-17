@@ -279,6 +279,10 @@ std::tuple<cukd::box_t<float3>*,PointPlusPayload*> build_kdtree_with_index(const
     cudaFree(d_indices);
     cudaFree(d_points);
     cudaFree(d_indices_knn);
+
+    cudaFree(d_bounds);
+    cudaFree(src_data);
+    
     return std::make_tuple(result, indices_knn,indices);
 
     }
